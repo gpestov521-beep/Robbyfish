@@ -4,7 +4,7 @@ from aiogram.filters import CommandStart, Command
 from aiogram.client.session.aiohttp import AiohttpSession
 from aiogram.utils.keyboard import ReplyKeyboardBuilder, InlineKeyboardBuilder
 
-TOKEN = "9262073471:AAGn1POkp2i51s0mOhRyI97AC83JhjV8bzM"
+TOKEN = "9262073471:AAEVLEbj3_7DTJ-Sl9jkRO4i357dKFTmLGY"
 DB = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fishing_db.json")
 bot = Bot(token=TOKEN) 
 dp = Dispatcher()
