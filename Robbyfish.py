@@ -3,7 +3,7 @@ from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters import CommandStart
 from aiogram.utils.keyboard import ReplyKeyboardBuilder, InlineKeyboardBuilder
 
-TOKEN = os.getenv("BOT_TOKEN", "9262073471:AAEVLEbj3_7DTJ-Sl9jkRO4i357dKFTmLGY")
+TOKEN = os.getenv("BOT_TOKEN", "9262073471:AAHRU9vp2GyBCzpNt-HzXmvfUFjY3uZCt1M")
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 os.makedirs(DATA_DIR, exist_ok=True)
