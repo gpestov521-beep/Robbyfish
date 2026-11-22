@@ -6,8 +6,8 @@ from aiogram.utils.keyboard import ReplyKeyboardBuilder, InlineKeyboardBuilder
 
 TOKEN = "9262073471:AAGn1POkp2i51s0mOhRyI97AC83JhjV8bzM"
 DB = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fishing_db.json")
-dp = Dispatcher()
 bot = Bot(token=TOKEN) 
+dp = Dispatcher()
 db = json.load(open(DB, encoding="utf-8")) if os.path.exists(DB) else {}
 
 def save():
