@@ -137,7 +137,7 @@ def get_player(user: types.User) -> Player:
     if user.id in USERS_DB: return USERS_DB[user.id]
     with sqlite3.connect(DB_PATH, timeout=15) as conn:
         row = conn.execute("SELECT data FROM players WHERE user_id = ?", (user.id,)).fetchone()
-    p = Player(**json.loads(row)) if row else Player(user_id=user.id, name=user.first_name)
+    p = Player(**json.loads(row[0])) if row else Player(user_id=user.id, name=user.first_name)
     if not row: save_player(p)
     USERS_DB[user.id] = p
     return p
