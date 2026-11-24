@@ -188,7 +188,7 @@ async def cmd_start(m: types.Message):
     p = get_player(m.from_user); w, gt, loc = get_weather(), get_game_time(), LOCATIONS[p.location]
     await m.answer(f"👤 Ур. <b>{p.level}</b> ({p.xp}/{p.level*250}) | 💰 <b>{p.money}₽</b>\n📍 <b>{loc['name']}</b> | 🕒 <b>{gt['name']} ({gt['time_str']})</b> | 🌤 {w['name']}\n🛠 {RODS[p.rod]['name']} | {REELS[p.reel]['name']} | {LINES[p.line]['name']}\n🪱 {BAITS[p.bait]['name']} ({p.baits_inv.get(p.bait, 0)} шт.)", reply_markup=main_menu_kb(), parse_mode="HTML")
 
-    @dp.callback_query(F.data == "cast")
+@dp.callback_query(F.data == "cast")
 async def cb_cast(c: types.CallbackQuery):
     p = get_player(c.from_user)
     if p.fight: return await c.answer("Уже тянете рыбу!", show_alert=True)
