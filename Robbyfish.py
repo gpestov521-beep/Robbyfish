@@ -160,7 +160,7 @@ def generate_bite(p: Player) -> Optional[dict]:
             if f["rarity"] <= 50: w *= max(0.25, 1.2 - vis)
             pool.append((fid, f)); weights.append(w)
     if not pool or random.random() > 0.68 * weather["bite_mod"]: return None
-    fid, f = random.choices(pool, weights=weights, k=1)
+    fid, f = random.choices(pool, weights=weights, k=1)[0]
     boost = 1.35 if p.bait in ("boilie", "live_bait", "squid") else 1.0
     r = random.random()
     if r < 0.0025 * boost: g, w = "rare", round(random.uniform(f["rare_w"], f["max_w"]), 3)
