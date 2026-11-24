@@ -259,7 +259,10 @@ async def cb_menus(c: types.CallbackQuery):
     if d == "locations":
         txt = "🗺 <b>ВОДОЕМЫ:</b>\n"
         for lid, l in LOCATIONS.items():
-            txt += f"\n<b>{l['name']}</b> {'✅' if p.level >= l['req_lvl'] else f'🔒({l[\"req_lvl\"]}ур)'} — {l['desc']}"
+          req = l["req_lvl"]
+             status = "✅" if p.level >= req else f"🔒({req}ур)"
+             txt += f"\n<b>{l['name']}</b> {status} — {l['desc']}"
+
             if p.level >= l["req_lvl"]: btns.append(InlineKeyboardButton(text=l["name"], callback_data=f"setloc_{lid}"))
     elif d == "gear":
         txt = "🎒 <b>СНАРЯЖЕНИЕ:</b>"
