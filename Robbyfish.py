@@ -188,11 +188,7 @@ async def cmd_start(m: types.Message):
     p = get_player(m.from_user); w, gt, loc = get_weather(), get_game_time(), LOCATIONS[p.location]
     await m.answer(f"👤 Ур. <b>{p.level}</b> ({p.xp}/{p.level*250}) | 💰 <b>{p.money}₽</b>\n📍 <b>{loc['name']}</b> | 🕒 <b>{gt['name']} ({gt['time_str']})</b> | 🌤 {w['name']}\n🛠 {RODS[p.rod]['name']} | {REELS[p.reel]['name']} | {LINES[p.line]['name']}\n🪱 {BAITS[p.bait]['name']} ({p.baits_inv.get(p.bait, 0)} шт.)", reply_markup=main_menu_kb(), parse_mode="HTML")
 
-@dp.callback_query(F.data == "menu")
-async def cb_menu(c: types.CallbackQuery):
-    p = get_player(c.from_user); w, gt, loc = get_weather(), get_game_time(), LOCATIONS[p.location]
-    await c.message.edit_text(f"👤 Ур. <b>{p.level}</b> ({p.xp}/{p.level*250}) | 💰 <b>{p.money}₽</b>\n📍 <b>{loc['name']}</b> | 🕒 <b>{gt['name']} ({gt['time_str']})</b> | 🌤 {w['name']}\n🛠 {RODS[p.rod]['name']} | {REELS[p.reel]['name']} | {LINES[p.line]['name']}\n🪱 {BAITS[p.bait]['name']} ({p.baits_inv.get(p.bait, 0)} шт.)", reply_markup=main_menu_kb(), parse_mode="HTML")
-@dp.callback_query(F.data == "cast")
+    @dp.callback_query(F.data == "cast")
 async def cb_cast(c: types.CallbackQuery):
     p = get_player(c.from_user)
     if p.fight: return await c.answer("Уже тянете рыбу!", show_alert=True)
@@ -259,11 +255,10 @@ async def cb_menus(c: types.CallbackQuery):
     if d == "locations":
         txt = "🗺 <b>ВОДОЕМЫ:</b>\n"
         for lid, l in LOCATIONS.items():
-          req = l["req_lvl"]
-             status = "✅" if p.level >= req else f"🔒({req}ур)"
-             txt += f"\n<b>{l['name']}</b> {status} — {l['desc']}"
-
-            if p.level >= l["req_lvl"]: btns.append(InlineKeyboardButton(text=l["name"], callback_data=f"setloc_{lid}"))
+            req = l["req_lvl"]
+            st = "✅" if p.level >= req else f"🔒({req}ур)"
+            txt += f"\n<b>{l['name']}</b> {st} — {l['desc']}"
+            if p.level >= req: btns.append(InlineKeyboardButton(text=l["name"], callback_data=f"setloc_{lid}"))
     elif d == "gear":
         txt = "🎒 <b>СНАРЯЖЕНИЕ:</b>"
         for rid in p.owned_rods: btns.append(InlineKeyboardButton(text=f"{'✅' if p.rod==rid else ''}🎣{RODS[rid]['name']}", callback_data=f"eq_rod_{rid}"))
@@ -285,7 +280,7 @@ async def cb_menus(c: types.CallbackQuery):
         tot_p = sum(x["price"] for x in p.keepnet); icons = {"unranked": "⚪", "zachet": "🟢", "trophy": "🟡", "rare": "🔵"}
         txt = "🪣 <b>САДОК:</b>\n" + "\n".join(f"• {icons.get(x['grade'],'🟢')} {x['name']} {x['weight']:.2f}кг ({x['price']}₽)" for x in p.keepnet[-15:]) + f"\n\n💰 Итого: <b>{tot_p}₽</b>"
         btns.append(InlineKeyboardButton(text=f"💵 Продать (+{tot_p}₽)", callback_data="sell_all"))
-    rows = [btns[i:i+2] for i in range(0, len(btns), 2)] + [[InlineKeyboardButton(text="🔙 Меню", callback_data="menu")]]
+    rows = [btns[i:i+2] for i in range(0, len(btns), 2)] + [[InlineKeyboardButton(text="🔙 Menu", callback_data="menu")]]
     await c.message.edit_text(txt, reply_markup=InlineKeyboardMarkup(inline_keyboard=rows), parse_mode="HTML")
 
 @dp.message(Command("backup"))
